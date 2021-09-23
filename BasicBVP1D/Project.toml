@@ -2,3 +2,6 @@ name = "BasicBVP1D"
 uuid = "5665f86c-d9b7-4c28-abec-8a99ae7bc29b"
 authors = ["Gideon Simpson <gideon.simpson@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
