@@ -25,5 +25,29 @@ function FiniteDifferenceBVPProblem(a, b, n, f)
     return FiniteDifferenceBVPProblem(a, b, Δx, n, x, f, A, rhs)
 end
 
-export FiniteDifferenceBVPProblem
+"""
+`assemble_system!` - assemble the linear system for solving
+"""
+function assemble_system!(problem)
+
+    # build first row
+    problem.A[1,1] = 2/problem.Δx^2;
+    problem.A[1,2] = -1/problem.Δx^2;
+    # build rows 2-n-1
+    for i in 2:problem.n-1
+        problem.A[i,i-1] = -1/problem.Δx^2;
+        problem.A[i,i] = 2/problem.Δx^2;
+        problem.A[i,i+1] = -1/problem.Δx^2;
+    end
+    # build row n
+    problem.A[problem.n,problem.n-1] =  -1/problem.Δx^2;
+    problem.A[problem.n,problem.n] =  2/problem.Δx^2;
+
+    # build rhs
+    @. problem.rhs = problem.f;
+
+    problem
+end
+
+export FiniteDifferenceBVPProblem, assemble_system!
 end # module
