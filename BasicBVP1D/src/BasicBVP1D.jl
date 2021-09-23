@@ -48,6 +48,10 @@ function assemble_system!(problem)
 
     problem
 end
+function solve_bvp(problem)
+    u = problem.A\problem.rhs;
+    return u
+end
 
-export FiniteDifferenceBVPProblem, assemble_system!
+export FiniteDifferenceBVPProblem, assemble_system!, solve_bvp
 end # module
