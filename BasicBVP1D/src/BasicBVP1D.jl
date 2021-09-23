@@ -1,12 +1,12 @@
 module BasicBVP1D
 
-struct FiniteDifferenceBVPProblem
+struct FiniteDifferenceBVPProblem{TF}
     a # (a,b) define the domain
     b
     Δx # mesh spacing
     n # number of points in the interior, excluding a and b
     x # interior mesh
-    f # value of f at the interior nodes
+    f::TF # value of f at the interior nodes
     A # the matrix
     rhs # right hand side of our system
 end
@@ -28,7 +28,7 @@ end
 """
 `assemble_system!` - assemble the linear system for solving
 """
-function assemble_system!(problem)
+function assemble_system!(problem::FiniteDifferenceBVPProblem{TF}) where {TF<:AbstractArray}
 
     # build first row
     problem.A[1,1] = 2/problem.Δx^2;
@@ -48,6 +48,29 @@ function assemble_system!(problem)
 
     problem
 end
+
+function assemble_system!(problem::FiniteDifferenceBVPProblem{TF}) where {TF<:Function}
+
+    # build first row
+    problem.A[1,1] = 2/problem.Δx^2;
+    problem.A[1,2] = -1/problem.Δx^2;
+    # build rows 2-n-1
+    for i in 2:problem.n-1
+        problem.A[i,i-1] = -1/problem.Δx^2;
+        problem.A[i,i] = 2/problem.Δx^2;
+        problem.A[i,i+1] = -1/problem.Δx^2;
+    end
+    # build row n
+    problem.A[problem.n,problem.n-1] =  -1/problem.Δx^2;
+    problem.A[problem.n,problem.n] =  2/problem.Δx^2;
+
+    # build rhs
+    @. problem.rhs = problem.f(problem.x);
+
+    problem
+end
+
+
 function solve_bvp(problem)
     u = problem.A\problem.rhs;
     return u
