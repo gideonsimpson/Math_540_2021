@@ -1,5 +1,6 @@
 module BasicBVP1D
 
+using SparseArrays
 struct FiniteDifferenceBVPProblem{TF}
     a # (a,b) define the domain
     b
@@ -24,6 +25,22 @@ function FiniteDifferenceBVPProblem(a, b, n, f)
     
     return FiniteDifferenceBVPProblem(a, b, Δx, n, x, f, A, rhs)
 end
+
+
+"""
+`SparseFiniteDifferenceBVPProblem` - Initalize the data structure
+"""
+function SparseFiniteDifferenceBVPProblem(a, b, n, f)
+    Δx = (b-a)/(n+1);
+    x = LinRange(a, b, n+2)[2:end-1];
+
+    # allocate the matrix
+    A = spzeros(n, n);
+    rhs = zeros(n);
+    
+    return FiniteDifferenceBVPProblem(a, b, Δx, n, x, f, A, rhs)
+end
+
 
 """
 `assemble_system!` - assemble the linear system for solving
@@ -76,5 +93,5 @@ function solve_bvp(problem)
     return u
 end
 
-export FiniteDifferenceBVPProblem, assemble_system!, solve_bvp
+export FiniteDifferenceBVPProblem, assemble_system!, solve_bvp, SparseFiniteDifferenceBVPProblem
 end # module
