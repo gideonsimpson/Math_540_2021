@@ -1,6 +1,7 @@
 module BasicBVP1D
 
 using SparseArrays
+using IterativeSolvers
 
 include("structures.jl")
 export FiniteDifferenceBVPProblem, DirichletBC, NeumannBC

@@ -6,9 +6,11 @@ using LinearAlgebra
     @test include("dense_test1.jl")
     @test include("dense_test2.jl")
     @test include("dense_test3.jl")
+    @test include("dense_test4.jl")
 end
 @testset "Sparse" begin
     @test include("sparse_test1.jl")
     @test include("sparse_test2.jl")
     @test include("sparse_test3.jl")
+    @test include("sparse_test4.jl")
 end
