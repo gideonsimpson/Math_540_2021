@@ -4,7 +4,7 @@ using SparseArrays
 using LinearAlgebra
 
 include("structures.jl")
-export FiniteDifferenceBVPProblem, DirichletBC, NeumannBC
+export FiniteDifferenceBVPProblem, DirichletBC, NeumannBC, PeriodicBC
 
 include("constructors.jl")
 export FiniteDifferenceBVPProblem, SparseFiniteDifferenceBVPProblem

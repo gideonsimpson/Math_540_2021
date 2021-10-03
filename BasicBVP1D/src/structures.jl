@@ -15,6 +15,10 @@ end
 struct DirichletBC
     u_bc
 end
+
 struct NeumannBC
     v_bc
+end
+
+struct PeriodicBC
 end

@@ -7,3 +7,8 @@ function solve_bvp(problem::FiniteDifferenceBVPProblem{TF, TBCL, TBCR}) where {T
     u = qr(problem.A)\problem.rhs;
     return u
 end
+
+function solve_bvp(problem::FiniteDifferenceBVPProblem{TF, TBCL, TBCR}) where {TF, TBCL<:PeriodicBC, TBCR<:PeriodicBC}
+    u = qr(problem.A)\problem.rhs;
+    return u
+end

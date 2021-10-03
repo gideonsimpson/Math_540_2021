@@ -94,3 +94,49 @@ function assemble_system!(problem::FiniteDifferenceBVPProblem{TF, TBCL, TBCR}) w
 
     problem
 end
+
+function assemble_system!(problem::FiniteDifferenceBVPProblem{TF, TBCL, TBCR}) where {TF<:AbstractArray, TBCL<:PeriodicBC, TBCR<:PeriodicBC}
+
+    # build first row
+    problem.A[1,1] = 2/problem.Δx^2;
+    problem.A[1,2] = -1/problem.Δx^2;
+    problem.A[1,end] = -1/problem.Δx^2;
+    # build rows 2-n
+    for i in 2:problem.n
+        problem.A[i,i-1] = -1/problem.Δx^2;
+        problem.A[i,i] = 2/problem.Δx^2;
+        problem.A[i,i+1] = -1/problem.Δx^2;
+    end
+    # build row n+1
+    problem.A[end,1] =  -1/problem.Δx^2;
+    problem.A[end,end-1] =  -1/problem.Δx^2;
+    problem.A[end,end] =  2/problem.Δx^2;
+
+    # build rhs
+    @. problem.rhs = problem.f;
+
+    problem
+end
+
+function assemble_system!(problem::FiniteDifferenceBVPProblem{TF, TBCL, TBCR}) where {TF<:Function, TBCL<:PeriodicBC, TBCR<:PeriodicBC}
+
+    # build first row
+    problem.A[1,1] = 2/problem.Δx^2;
+    problem.A[1,2] = -1/problem.Δx^2;
+    problem.A[1,end] = -1/problem.Δx^2;
+    # build rows 2-n
+    for i in 2:problem.n
+        problem.A[i,i-1] = -1/problem.Δx^2;
+        problem.A[i,i] = 2/problem.Δx^2;
+        problem.A[i,i+1] = -1/problem.Δx^2;
+    end
+    # build row n+1
+    problem.A[end,1] =  -1/problem.Δx^2;
+    problem.A[end,end-1] =  -1/problem.Δx^2;
+    problem.A[end,end] =  2/problem.Δx^2;
+
+    # build rhs
+    @. problem.rhs = problem.f(problem.x);
+
+    problem
+end
