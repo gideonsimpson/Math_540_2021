@@ -4,6 +4,6 @@ function solve_bvp(problem::FiniteDifferenceBVPProblem{TF, TBCL, TBCR}) where {T
 end
 
 function solve_bvp(problem::FiniteDifferenceBVPProblem{TF, TBCL, TBCR}) where {TF, TBCL<:NeumannBC, TBCR<:NeumannBC}
-    u = lsmr(problem.A, problem.rhs);
+    u = qr(problem.A)\problem.rhs;
     return u
 end

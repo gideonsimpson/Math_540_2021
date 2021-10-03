@@ -87,8 +87,10 @@ function assemble_system!(problem::FiniteDifferenceBVPProblem{TF, TBCL, TBCR}) w
 
     # build rhs
     @. problem.rhs[2:end-1] = problem.f(problem.x[2:end-1]);
+    # problem.rhs[1] = 0.5 * problem.f(problem.x[1])-problem.left_bc.v_bc/problem.Δx
+    # problem.rhs[end] = 0.5 * problem.f(problem.x[end]) + problem.right_bc.v_bc/problem.Δx
     problem.rhs[1] = -problem.left_bc.v_bc/problem.Δx
-    problem.rhs[end] = problem.right_bc.v_bc/problem.Δx
+    problem.rhs[end] =problem.right_bc.v_bc/problem.Δx
 
     problem
 end
