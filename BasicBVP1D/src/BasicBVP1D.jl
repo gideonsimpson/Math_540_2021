@@ -2,17 +2,22 @@ module BasicBVP1D
 
 using SparseArrays
 using LinearAlgebra
+using FFTW
 
 include("structures.jl")
-export FiniteDifferenceBVPProblem, DirichletBC, NeumannBC, PeriodicBC
+export FiniteDifferenceBVPProblem, DirichletBC, NeumannBC, PeriodicBC, SpectralBVPProblem
 
-include("constructors.jl")
-export FiniteDifferenceBVPProblem, SparseFiniteDifferenceBVPProblem
+include("constructors_fd.jl")
+include("constructors_sparse.jl")
+include("constructors_spectral.jl")
+export FiniteDifferenceBVPProblem, SparseFiniteDifferenceBVPProblem, SpectralBVPProblem
 
-include("assembly.jl")
+include("assembly_fd.jl")
+include("assembly_spectral.jl")
 export assemble_system!
 
-include("solve.jl")
+include("solve_fd.jl")
+include("solve_spectral.jl")
 export solve_bvp
 
 end # module
