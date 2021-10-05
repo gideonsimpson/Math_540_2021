@@ -1,3 +1,14 @@
+function assemble_system!(problem::SpectralBVPProblem{TF, TBCL, TBCR}) where {TF<:AbstractArray, TBCL<:PeriodicBC, TBCR<:PeriodicBC}
+
+    # build eigenvalues
+    @. problem.λ = ((2*π/(problem.b-problem.a)) * [0:problem.N÷2; -(problem.N÷2)+1:-1])^2;
+
+    # build rhs
+    @. problem.rhs = problem.f;
+
+    problem
+end
+
 function assemble_system!(problem::SpectralBVPProblem{TF, TBCL, TBCR}) where {TF<:Function, TBCL<:PeriodicBC, TBCR<:PeriodicBC}
 
     # build eigenvalues
