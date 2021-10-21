@@ -1,13 +1,16 @@
 using Poisson2D
+using LinearAlgebra
 using BenchmarkTools
 
-@show Threads.nthreads();
+@show n_threads = Threads.nthreads();
+# without the next line, it will use the max number of threads available
+BLAS.set_num_threads(n_threads);
 # set problem parameters
 a = 0;
 b = 1;
 c = 0;
 d = 1;
-n = 99;
+n = 999;
 
 kx = 5;
 ky = 4;
