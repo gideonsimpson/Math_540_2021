@@ -1,0 +1,7 @@
+name = "PiMC"
+uuid = "a86cc06d-6d0c-4395-b8ca-5df6c3a5681d"
+authors = ["Gideon Simpson <gideon.simpson@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
